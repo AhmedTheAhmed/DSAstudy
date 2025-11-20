@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSA Master Quiz - 100 Questions</title>
+    <!-- Updated Title -->
+    <title>DSA Master Quiz - 110 Questions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -24,6 +25,21 @@
 
         .option-btn { transition: all 0.2s ease; }
         .option-btn:active { transform: scale(0.98); }
+        
+        /* Style for code blocks */
+        .code-block {
+            background-color: #1f2937; /* Dark slate background */
+            color: #d1d5db; /* Light gray text */
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: 1rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            border: 1px solid #374151;
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
@@ -35,7 +51,8 @@
                 <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
                     <i class="fas fa-code"></i>
                 </div>
-                <h1 class="font-bold text-xl tracking-tight text-slate-900">DSA Master <span class="text-xs font-normal text-slate-500 ml-2">100 Question Challenge</span></h1>
+                <!-- Updated Title and Count -->
+                <h1 class="font-bold text-xl tracking-tight text-slate-900">DSA Master <span class="text-xs font-normal text-slate-500 ml-2">110 Question Challenge</span></h1>
             </div>
             <div class="flex items-center gap-4 text-sm font-medium text-slate-600">
                 <div id="score-display" class="hidden bg-slate-100 px-3 py-1 rounded-full">
@@ -58,24 +75,22 @@
                     <i class="fas fa-layer-group"></i>
                 </div>
                 <h2 class="text-3xl font-bold mb-3 text-slate-800">Comprehensive DSA Exam Prep</h2>
-                <p class="text-slate-500 mb-6">100 Questions structured by difficulty.<br>No AI required. Practical & Theoretical C++.</p>
+                <!-- Updated Count -->
+                <p class="text-slate-500 mb-6">110 Questions structured by difficulty.<br>Focus on Time Complexity, ADTs, and Algorithms.</p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left max-w-lg mx-auto mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left max-w-lg mx-auto mb-8">
+                    <!-- Updated Categories and Counts -->
                     <div class="p-3 bg-green-50 border border-green-100 rounded-lg">
-                        <span class="font-bold text-green-700 block">Basic (1-25)</span>
-                        <span class="text-xs text-green-600">Big O, Arrays, Pointers, Structs</span>
+                        <span class="font-bold text-green-700 block">Basic (1-37)</span>
+                        <span class="text-xs text-green-600">Big O, Arrays, Pointers, Structs, Malloc</span>
                     </div>
                     <div class="p-3 bg-blue-50 border border-blue-100 rounded-lg">
-                        <span class="font-bold text-blue-700 block">Intermediate (26-50)</span>
-                        <span class="text-xs text-blue-600">Linked Lists, Stacks, Queues</span>
+                        <span class="font-bold text-blue-700 block">Intermediate (38-74)</span>
+                        <span class="text-xs text-blue-600">Linked Lists, Stacks, Queues, Insertion/Bubble Sort</span>
                     </div>
                     <div class="p-3 bg-purple-50 border border-purple-100 rounded-lg">
-                        <span class="font-bold text-purple-700 block">Advanced (51-75)</span>
-                        <span class="text-xs text-purple-600">Trees, Heaps, Maps, Sets</span>
-                    </div>
-                    <div class="p-3 bg-orange-50 border border-orange-100 rounded-lg">
-                        <span class="font-bold text-orange-700 block">Expert (76-100)</span>
-                        <span class="text-xs text-orange-600">Memory Mgmt, Edge Cases, Complex Analysis</span>
+                        <span class="font-bold text-purple-700 block">Advanced (75-110)</span>
+                        <span class="text-xs text-purple-600">Trees, Heaps, Maps, Sets, Merge Sort, Deque</span>
                     </div>
                 </div>
             </div>
@@ -90,7 +105,8 @@
             <!-- Level Indicator -->
             <div class="flex justify-between items-end mb-2 px-1">
                 <span id="difficulty-label" class="text-sm font-bold text-green-600 bg-green-100 px-2 py-0.5 rounded">Basic Level</span>
-                <span class="text-xs font-bold tracking-wider text-slate-400 uppercase">Question <span id="q-current">1</span>/100</span>
+                <!-- Updated Question Count -->
+                <span class="text-xs font-bold tracking-wider text-slate-400 uppercase">Question <span id="q-current">1</span>/110</span>
             </div>
 
             <!-- Progress Bar -->
@@ -104,6 +120,7 @@
                     <h2 id="question-text" class="text-lg md:text-xl font-semibold text-slate-800 leading-relaxed">
                         <!-- Question goes here -->
                     </h2>
+                    <pre id="code-snippet" class="code-block hidden"></pre>
                 </div>
 
                 <div class="p-6 md:p-8 bg-white relative">
@@ -121,9 +138,15 @@
                             <p id="feedback-text" class="text-xs text-slate-600"></p>
                         </div>
                     </div>
-                    <button id="next-btn" onclick="nextQuestion()" class="w-full md:w-auto px-8 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
-                        Next <i class="fas fa-arrow-right"></i>
-                    </button>
+                    <div class="flex gap-3 w-full md:w-auto">
+                        <!-- Added Skip Button -->
+                        <button id="skip-btn" onclick="skipQuestion()" class="flex-1 md:flex-none px-6 py-2.5 border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 rounded-lg font-medium transition-colors">
+                            Skip
+                        </button>
+                        <button id="next-btn" onclick="nextQuestion()" class="flex-1 md:flex-none px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -139,8 +162,9 @@
                     <span id="final-score-percent" class="text-3xl font-bold text-slate-800">0%</span>
                 </div>
             </div>
+            <!-- Updated Question Count -->
             <h2 class="text-2xl font-bold text-slate-800 mb-2">Challenge Complete!</h2>
-            <p class="text-slate-500 mb-6">You answered <span id="final-score-text" class="font-bold text-slate-900">0</span> correctly out of 100.</p>
+            <p class="text-slate-500 mb-6">You answered <span id="final-score-text" class="font-bold text-slate-900">0</span> correctly out of 110.</p>
             
             <div id="result-message" class="p-4 bg-slate-50 rounded-lg text-sm text-slate-600 mb-6">
                 <!-- Performance message -->
@@ -154,134 +178,332 @@
     </main>
 
     <script>
-        /* 100 QUESTIONS DATA STRUCTURE
-           Groups:
-           0-24: Basic
-           25-49: Intermediate
-           50-74: Advanced
-           75-99: Expert
+        /* 110 QUESTIONS DATA STRUCTURE: 37 Basic, 37 Intermediate, 36 Advanced
+           Ranges (Original Order):
+           0-36: Basic
+           37-73: Intermediate
+           74-109: Advanced
+           
+           Note: The list is shuffled, so the actual difficulty is determined by the qData.diff property.
         */
         const quizData = [
-            // --- GROUP 1: BASIC (1-25) ---
-            { q: "What is the time complexity O(1) known as?", a: "Constant Time", options: ["Constant Time", "Linear Time", "Logarithmic Time", "Exponential Time"], diff: "Basic" },
-            { q: "What is the time complexity O(n) known as?", a: "Linear Time", options: ["Linear Time", "Constant Time", "Quadratic Time", "Logarithmic Time"], diff: "Basic" },
-            { q: "What is the time complexity to access an array element by index?", a: "O(1)", options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"], diff: "Basic" },
-            { q: "In C++, what is the default access specifier for a struct?", a: "public", options: ["public", "private", "protected", "friend"], diff: "Basic" },
-            { q: "Which operator is used to get the memory address of a variable?", a: "& (Address-of)", options: ["& (Address-of)", "* (Dereference)", "-> (Arrow)", ". (Dot)"], diff: "Basic" },
-            { q: "Which operator is used to access the value stored at a pointer's address?", a: "* (Dereference)", options: ["* (Dereference)", "& (Address-of)", "-> (Arrow)", ":: (Scope)"], diff: "Basic" },
-            { q: "What does `malloc` return?", a: "void*", options: ["void*", "int*", "null", "char*"], diff: "Basic" },
-            { q: "How do you correctly free an array allocated with `new int[10]`?", a: "delete[] p;", options: ["delete[] p;", "delete p;", "free(p);", "delete p[];"], diff: "Basic" },
-            { q: "What is the main disadvantage of a standard C-array?", a: "Fixed size", options: ["Fixed size", "Slow access", "High memory overhead", "Cannot store integers"], diff: "Basic" },
-            { q: "What is the time complexity O(n^2) known as?", a: "Quadratic Time", options: ["Quadratic Time", "Exponential Time", "Linear Time", "Logarithmic Time"], diff: "Basic" },
-            { q: "If `p` is an integer pointer pointing to address 1000, what is `p + 1` (assuming 4-byte int)?", a: "1004", options: ["1004", "1001", "1008", "2000"], diff: "Basic" },
-            { q: "Which header file is needed for `std::vector`?", a: "<vector>", options: ["<vector>", "<array>", "<list>", "<collection>"], diff: "Basic" },
-            { q: "What happens if you access an array out of bounds in C++?", a: "Undefined Behavior", options: ["Undefined Behavior", "Compiler Error", "Always returns 0", "Throws an exception"], diff: "Basic" },
-            { q: "What is the space complexity of creating an array of size N?", a: "O(N)", options: ["O(N)", "O(1)", "O(log N)", "O(N^2)"], diff: "Basic" },
-            { q: "Which loop typically results in O(log n) time complexity?", a: "i = i * 2", options: ["i = i * 2", "i = i + 1", "i = i + 2", "i = i - 1"], diff: "Basic" },
-            { q: "What is the default value of a local int variable in C++?", a: "Garbage/Undefined", options: ["Garbage/Undefined", "0", "null", "-1"], diff: "Basic" },
-            { q: "What does `sizeof(int*)` typically return on a 64-bit system?", a: "8 bytes", options: ["8 bytes", "4 bytes", "2 bytes", "16 bytes"], diff: "Basic" },
-            { q: "Which function is used to resize memory allocated by malloc?", a: "realloc", options: ["realloc", "resize", "alloc", "malloc_new"], diff: "Basic" },
-            { q: "A function calling itself is known as?", a: "Recursion", options: ["Recursion", "Iteration", "Polymorphism", "Encapsulation"], diff: "Basic" },
-            { q: "What is the Big O of Binary Search?", a: "O(log n)", options: ["O(log n)", "O(n)", "O(1)", "O(n log n)"], diff: "Basic" },
-            { q: "What is `nullptr` in C++?", a: "A type-safe null pointer constant", options: ["A type-safe null pointer constant", "An integer 0", "A macro for NULL", "A void pointer"], diff: "Basic" },
-            { q: "How are elements stored in a C++ array?", a: "Contiguously in memory", options: ["Contiguously in memory", "Linked via pointers", "Randomly in heap", "Indexed by hash"], diff: "Basic" },
-            { q: "Which of these is NOT a primitive type in C++?", a: "std::string", options: ["std::string", "int", "char", "double"], diff: "Basic" },
-            { q: "What is the worst-case complexity of linear search?", a: "O(n)", options: ["O(n)", "O(1)", "O(log n)", "O(n/2)"], diff: "Basic" },
-            { q: "In `struct Node { int data; Node* next; }`, what is `next`?", a: "A pointer to a Node", options: ["A pointer to a Node", "A Node object", "An integer", "A reference"], diff: "Basic" },
+            // --- GROUP 1: BASIC (1-37) ---
+            // --------------------------------------------------------------------------------------
+            // TIME COMPLEXITY CODE SNIPPETS (Q1-Q5)
+            // --------------------------------------------------------------------------------------
+            { 
+                q: "What is the time complexity of the following C++ snippet?", 
+                code: "int a = 5; int b = 10; int c = a + b;",
+                a: "O(1)", 
+                options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"], 
+                diff: "Basic" 
+            },
+            { 
+                q: "What is the time complexity of the following C++ snippet?", 
+                code: "void printArray(int arr[], int n) { for (int i = 0; i < n; i++) { std::cout << arr[i]; } }",
+                a: "O(n)", 
+                options: ["O(n)", "O(1)", "O(n log n)", "O(n^2)"], 
+                diff: "Basic" 
+            },
+            { 
+                q: "What is the time complexity of the following C++ snippet?", 
+                code: "void mystery(int n) { for (int i = 1; i < n; i = i * 2) { /* constant work */ } }",
+                a: "O(log n)", 
+                options: ["O(log n)", "O(n)", "O(1)", "O(n^2)"], 
+                diff: "Basic" 
+            },
+            { 
+                q: "What is the time complexity of accessing the middle element of a C-style array `arr[n/2]`?", 
+                code: "int middle = arr[n / 2];",
+                a: "O(1)", 
+                options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"], 
+                diff: "Basic" 
+            },
+            { 
+                q: "What is the time complexity of the following C++ snippet?", 
+                code: "void addElements(int n) { int sum = 0; for (int i = 0; i < n/2; i++) { sum += i; } }",
+                a: "O(n)", 
+                options: ["O(n)", "O(n^2)", "O(log n)", "O(1)"], 
+                diff: "Basic" 
+            },
+            // --------------------------------------------------------------------------------------
+            // PDF & ADT/CONCEPT QUESTIONS (Q6-Q37)
+            // --------------------------------------------------------------------------------------
+                { q: "What is the main goal of performance analysis of algorithms?", a: "To understand how time and memory usage grow as input size N increases.", options: ["To understand how time and memory usage grow as input size N increases.", "To determine the exact execution time in milliseconds.", "To write the most compact code possible.", "To minimize the use of recursion."], diff: "Basic" },
+                { q: "What is the time complexity of a single loop that runs from i=0 to N-1?", a: "O(N)", options: ["O(N)", "O(1)", "O(log N)", "O(N^2)"], diff: "Basic" },
+                { q: "If an algorithm has two parts with complexities O(N) and O(N^2), what is the overall Big-O?", a: "O(N^2)", options: ["O(N^2)", "O(N)", "O(N log N)", "O(1)"], diff: "Basic" },
+                { q: "What is the time complexity of a nested loop: for i in [0..N-1], for j in [0..N-1]?", a: "O(N^2)", options: ["O(N^2)", "O(N)", "O(2N)", "O(log N)"], diff: "Basic" },
+                { q: "Which statement correctly orders the common time complexities from best to worst?", a: "O(1), O(log N), O(N), O(N log N), O(N^2)", options: ["O(1), O(log N), O(N), O(N log N), O(N^2)", "O(N^2), O(N), O(log N), O(1)", "O(N!), O(2^N), O(N^2), O(N)", "O(log N), O(1), O(N), O(N^2)"], diff: "Basic" },
+                { q: "Why is it important to check if a pointer returned by malloc is NULL?", a: "To avoid dereferencing an invalid pointer and crashing the program.", options: ["To avoid dereferencing an invalid pointer and crashing the program.", "To ensure the memory is initialized to zero.", "To automatically free the memory later.", "To confirm the memory block is large enough."], diff: "Basic" },
+                { q: "Which STL header file must you include to use std::sort, std::find, and other standard algorithms?", a: "<algorithm>", options: ["<algorithm>", "<utils>", "<vector>", "<stdlib>"], diff: "Basic" },
+                { q: "What is the time complexity O(1) known as?", a: "Constant Time", options: ["Constant Time", "Linear Time", "Logarithmic Time", "Exponential Time"], diff: "Basic" },
+                { q: "What is the time complexity O(n) known as?", a: "Linear Time", options: ["Linear Time", "Constant Time", "Quadratic Time", "Logarithmic Time"], diff: "Basic" },
+                { q: "What is the time complexity to access an array element by index?", a: "O(1)", options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"], diff: "Basic" },
+                { q: "In C++, what is the default access specifier for a struct?", a: "public", options: ["public", "private", "protected", "friend"], diff: "Basic" },
+                { q: "Which operator is used to get the memory address of a variable?", a: "& (Address-of)", options: ["& (Address-of)", "* (Dereference)", "-> (Arrow)", ". (Dot)"], diff: "Basic" },
+                { q: "Which operator is used to access the value stored at a pointer's address?", a: "* (Dereference)", options: ["* (Dereference)", "& (Address-of)", "-> (Arrow)", ":: (Scope)"], diff: "Basic" },
+                { q: "What does malloc return?", a: "void*", options: ["void*", "int*", "null", "char*"], diff: "Basic" },
+                { q: "How do you correctly free an array allocated with new int[10]?", a: "delete[] p;", options: ["delete[] p;", "delete p;", "free(p);", "delete p[];"], diff: "Basic" },
+                { q: "What is the main disadvantage of a standard C-array?", a: "Fixed size", options: ["Fixed size", "Slow access", "High memory overhead", "Cannot store integers"], diff: "Basic" },
+                { q: "What is the time complexity O(n^2) known as?", a: "Quadratic Time", options: ["Quadratic Time", "Exponential Time", "Linear Time", "Logarithmic Time"], diff: "Basic" },
+                { q: "If p is an integer pointer pointing to address 1000, what is p + 1 (assuming 4-byte int)?", a: "1004", options: ["1004", "1001", "1008", "2000"], diff: "Basic" },
+                { q: "Which header file is needed for std::vector?", a: "<vector>", options: ["<vector>", "<array>", "<list>", "<collection>"], diff: "Basic" },
+                { q: "What happens if you access an array out of bounds in C++?", a: "Undefined Behavior", options: ["Undefined Behavior", "Compiler Error", "Always returns 0", "Throws an exception"], diff: "Basic" },
+                { q: "What is the space complexity of creating an array of size N?", a: "O(N)", options: ["O(N)", "O(1)", "O(log N)", "O(N^2)"], diff: "Basic" },
+                { q: "Which loop typically results in O(log n) time complexity?", a: "i = i * 2", options: ["i = i * 2", "i = i + 1", "i = i + 2", "i = i - 1"], diff: "Basic" },
+                { q: "What is the default value of a local int variable in C++?", a: "Garbage/Undefined", options: ["Garbage/Undefined", "0", "null", "-1"], diff: "Basic" },
+                { q: "What does sizeof(int*) typically return on a 64-bit system?", a: "8 bytes", options: ["8 bytes", "4 bytes", "2 bytes", "16 bytes"], diff: "Basic" },
+                { q: "Which function is used to resize memory allocated by malloc?", a: "realloc", options: ["realloc", "resize", "alloc", "malloc_new"], diff: "Basic" },
+                { q: "A function calling itself is known as?", a: "Recursion", options: ["Recursion", "Iteration", "Polymorphism", "Encapsulation"], diff: "Basic" },
+                { q: "What is the Big O of Binary Search?", a: "O(log n)", options: ["O(log n)", "O(n)", "O(1)", "O(n log n)"], diff: "Basic" },
+                { q: "What is nullptr in C++?", a: "A type-safe null pointer constant", options: ["A type-safe null pointer constant", "An integer 0", "A macro for NULL", "A void pointer"], diff: "Basic" },
+                { q: "How are elements stored in a C++ array?", a: "Contiguously in memory", options: ["Contiguously in memory", "Linked via pointers", "Randomly in heap", "Indexed by hash"], diff: "Basic" },
+                { q: "Which of these is NOT a primitive type in C++?", a: "std::string", options: ["std::string", "int", "char", "double"], diff: "Basic" },
+                { q: "What is the worst-case complexity of linear search?", a: "O(n)", options: ["O(n)", "O(1)", "O(log n)", "O(n/2)"], diff: "Basic" },
+                { q: "In struct Node { int data; Node* next; }, what is next?", a: "A pointer to a Node", options: ["A pointer to a Node", "A Node object", "An integer", "A reference"], diff: "Basic" },
 
-            // --- GROUP 2: INTERMEDIATE (26-50) ---
-            { q: "What data structure follows LIFO?", a: "Stack", options: ["Stack", "Queue", "Array", "Tree"], diff: "Intermediate" },
-            { q: "What data structure follows FIFO?", a: "Queue", options: ["Queue", "Stack", "Heap", "Graph"], diff: "Intermediate" },
-            { q: "Time complexity to insert at the START of a Singly Linked List?", a: "O(1)", options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"], diff: "Intermediate" },
-            { q: "Time complexity to access the Kth element in a Linked List?", a: "O(n)", options: ["O(n)", "O(1)", "O(log n)", "O(k)"], diff: "Intermediate" },
-            { q: "Which data structure is best for implementing a recursive algorithm iteratively?", a: "Stack", options: ["Stack", "Queue", "Map", "Set"], diff: "Intermediate" },
-            { q: "What is the main difference between Singly and Doubly Linked Lists?", a: "Doubly has prev and next pointers", options: ["Doubly has prev and next pointers", "Singly is faster", "Doubly uses less memory", "Singly is circular"], diff: "Intermediate" },
-            { q: "What is the worst-case time complexity of insertion in a `std::vector` (forcing resize)?", a: "O(n)", options: ["O(n)", "O(1)", "O(log n)", "O(n^2)"], diff: "Intermediate" },
-            { q: "Which std container is implemented as a Doubly Linked List?", a: "std::list", options: ["std::list", "std::vector", "std::deque", "std::forward_list"], diff: "Intermediate" },
-            { q: "In a Circular Linked List, the tail's next pointer points to?", a: "Head", options: ["Head", "Null", "Tail", "Previous"], diff: "Intermediate" },
-            { q: "What happens to iterators in a vector when it resizes?", a: "They become invalidated", options: ["They become invalidated", "They update automatically", "They point to null", "Nothing happens"], diff: "Intermediate" },
-            { q: "How do you check if a Stack is empty?", a: "top == null or size == 0", options: ["top == null or size == 0", "top == max", "front == rear", "base == top"], diff: "Intermediate" },
-            { q: "Implementing a Queue with an Array requires handling what issue?", a: "Wrapping around (Circular)", options: ["Wrapping around (Circular)", "Recursion depth", "Null pointers", "Memory leaks"], diff: "Intermediate" },
-            { q: "Which operation is O(1) in a `std::deque` but O(n) in a `std::vector`?", a: "push_front", options: ["push_front", "push_back", "operator[]", "size()"], diff: "Intermediate" },
-            { q: "What is the minimum number of pointers per node in a Doubly Linked List?", a: "2", options: ["2", "1", "3", "0"], diff: "Intermediate" },
-            { q: "Which sorting algorithm is typically O(n^2)?", a: "Bubble Sort", options: ["Bubble Sort", "Merge Sort", "Heap Sort", "Quick Sort"], diff: "Intermediate" },
-            { q: "Which sorting algorithm is typically O(n log n)?", a: "Merge Sort", options: ["Merge Sort", "Bubble Sort", "Insertion Sort", "Selection Sort"], diff: "Intermediate" },
-            { q: "To reverse a Linked List, how many pointers do you typically track?", a: "3 (prev, curr, next)", options: ["3 (prev, curr, next)", "1 (head)", "2 (curr, next)", "4 (head, tail, prev, curr)"], diff: "Intermediate" },
-            { q: "What is a 'jagged array'?", a: "Array of arrays with different sizes", options: ["Array of arrays with different sizes", "An unsorted array", "An array with gaps", "A sparse matrix"], diff: "Intermediate" },
-            { q: "What is the complexity of `pop_back()` on a vector?", a: "O(1)", options: ["O(1)", "O(n)", "O(log n)", "O(n/2)"], diff: "Intermediate" },
-            { q: "What does `std::stack::pop()` return?", a: "void (nothing)", options: ["void (nothing)", "The top element", "A boolean", "The new size"], diff: "Intermediate" },
-            { q: "Which data structure is used for Breadth-First Search (BFS)?", a: "Queue", options: ["Queue", "Stack", "Tree", "Hash Map"], diff: "Intermediate" },
-            { q: "Which data structure is used for Depth-First Search (DFS)?", a: "Stack", options: ["Stack", "Queue", "Linked List", "Set"], diff: "Intermediate" },
-            { q: "In a Queue implemented with a Linked List, where do you Enqueue?", a: "Tail", options: ["Tail", "Head", "Middle", "Anywhere"], diff: "Intermediate" },
-            { q: "In a Queue implemented with a Linked List, where do you Dequeue?", a: "Head", options: ["Head", "Tail", "Middle", "Anywhere"], diff: "Intermediate" },
-            { q: "What is the space complexity of storing a Linked List of N nodes?", a: "O(N)", options: ["O(N)", "O(1)", "O(N^2)", "O(log N)"], diff: "Intermediate" },
+                // --- GROUP 2: INTERMEDIATE (38-74) ---
+                // --------------------------------------------------------------------------------------
+                // ADT/CODE COMPLETION QUESTIONS (Q38-Q42)
+                // --------------------------------------------------------------------------------------
+                { 
+                    q: "What is the complexity of searching for an element in a standard Linked List?", 
+                    code: "// Searching for a key requires traversing the entire list in the worst case.",
+                    a: "O(N)", 
+                    options: ["O(N)", "O(1)", "O(log N)", "O(N log N)"], 
+                    diff: "Intermediate" 
+                },
+                { 
+                    q: "What is the complexity of accessing the k-th element of a std::vector using the operator[]?", 
+                    code: "int val = myVector[k];",
+                    a: "O(1)", 
+                    options: ["O(1)", "O(k)", "O(N)", "O(log N)"], 
+                    diff: "Intermediate" 
+                },
+                { 
+                    q: "What is the complexity of push_back() on a std::vector (amortized)?", 
+                    code: "myVector.push_back(new_val);",
+                    a: "O(1)", 
+                    options: ["O(1)", "O(N)", "O(log N)", "O(N^2)"], 
+                    diff: "Intermediate" 
+                },
+                { 
+                    q: "What is the complexity of the worst-case scenario for Insertion Sort?", 
+                    code: "/* Insertion sort is most efficient when the list is almost sorted. */",
+                    a: "O(n^2)", 
+                    options: ["O(n^2)", "O(n log n)", "O(n)", "O(log n)"], 
+                    diff: "Intermediate" 
+                },
+                { 
+                    q: "The operation to add an element to a Stack is called ______. The operation to remove an element is called ______.", 
+                    code: "void push(T value); \nvoid pop();",
+                    a: "Push, Pop", 
+                    options: ["Push, Pop", "Enqueue, Dequeue", "Insert, Delete", "Add, Remove"], 
+                    diff: "Intermediate" 
+                },
+                // --------------------------------------------------------------------------------------
+                // PDF & ADT/CONCEPT QUESTIONS (Q43-Q74)
+                // --------------------------------------------------------------------------------------
+                { q: "What data structure follows LIFO?", a: "Stack", options: ["Stack", "Queue", "Array", "Tree"], diff: "Intermediate" },
+                { q: "What data structure follows FIFO?", a: "Queue", options: ["Queue", "Stack", "Heap", "Graph"], diff: "Intermediate" },
+                { q: "Time complexity to insert at the START of a Singly Linked List?", a: "O(1)", options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"], diff: "Intermediate" },
+                { q: "Time complexity to access the Kth element in a Linked List?", a: "O(n)", options: ["O(n)", "O(1)", "O(log n)", "O(k)"], diff: "Intermediate" },
+                { q: "Which data structure is best for implementing a recursive algorithm iteratively?", a: "Stack", options: ["Stack", "Queue", "Map", "Set"], diff: "Intermediate" },
+                { q: "What is the main difference between Singly and Doubly Linked Lists?", a: "Doubly has prev and next pointers", options: ["Doubly has prev and next pointers", "Singly is faster", "Doubly uses less memory", "Singly is circular"], diff: "Intermediate" },
+                { q: "What is the worst-case time complexity of insertion in a std::vector (forcing resize)?", a: "O(n)", options: ["O(n)", "O(1)", "O(log n)", "O(n^2)"], diff: "Intermediate" },
+                { q: "Which std container is implemented as a Doubly Linked List?", a: "std::list", options: ["std::list", "std::vector", "std::deque", "std::forward_list"], diff: "Intermediate" },
+                { q: "In a Circular Linked List, the tail's next pointer points to?", a: "Head", options: ["Head", "Null", "Tail", "Previous"], diff: "Intermediate" },
+                { q: "What happens to iterators in a vector when it resizes?", a: "They become invalidated", options: ["They become invalidated", "They update automatically", "They point to null", "Nothing happens"], diff: "Intermediate" },
+                { q: "How do you check if a Stack is empty?", a: "top == null or size == 0", options: ["top == null or size == 0", "top == max", "front == rear", "base == top"], diff: "Intermediate" },
+                { q: "Implementing a Queue with an Array requires handling what issue?", a: "Wrapping around (Circular)", options: ["Wrapping around (Circular)", "Recursion depth", "Null pointers", "Memory leaks"], diff: "Intermediate" },
+                { q: "Which operation is O(1) in a std::deque but O(n) in a std::vector?", a: "push_front", options: ["push_front", "push_back", "operator[]", "size()"], diff: "Intermediate" },
+                { q: "What is the minimum number of pointers per node in a Doubly Linked List?", a: "2", options: ["2", "1", "3", "0"], diff: "Intermediate" },
+                { q: "Which sorting algorithm is typically O(n^2)?", a: "Bubble Sort", options: ["Bubble Sort", "Merge Sort", "Heap Sort", "Quick Sort"], diff: "Intermediate" },
+                { q: "Which sorting algorithm is typically O(n log n)?", a: "Merge Sort", options: ["Merge Sort", "Bubble Sort", "Insertion Sort", "Selection Sort"], diff: "Intermediate" },
+                { q: "To reverse a Linked List, how many pointers do you typically track?", a: "3 (prev, curr, next)", options: ["3 (prev, curr, next)", "1 (head)", "2 (curr, next)", "4 (head, tail, prev, curr)"], diff: "Intermediate" },
+                { q: "What is a 'jagged array'?", a: "Array of arrays with different sizes", options: ["Array of arrays with different sizes", "An unsorted array", "An array with gaps", "A sparse matrix"], diff: "Intermediate" },
+                { q: "What is the complexity of pop_back() on a vector?", a: "O(1)", options: ["O(1)", "O(n)", "O(log n)", "O(n/2)"], diff: "Intermediate" },
+                { q: "What does std::stack::pop() return?", a: "void (nothing)", options: ["void (nothing)", "The top element", "A boolean", "The new size"], diff: "Intermediate" },
+                { q: "Which data structure is used for Breadth-First Search (BFS)?", a: "Queue", options: ["Queue", "Stack", "Tree", "Hash Map"], diff: "Intermediate" },
+                { q: "Which data structure is used for Depth-First Search (DFS)?", a: "Stack", options: ["Stack", "Queue", "Linked List", "Set"], diff: "Intermediate" },
+                { q: "In a Queue implemented with a Linked List, where do you Enqueue?", a: "Tail", options: ["Tail", "Head", "Middle", "Anywhere"], diff: "Intermediate" },
+                { q: "In a Queue implemented with a Linked List, where do you Dequeue?", a: "Head", options: ["Head", "Tail", "Middle", "Anywhere"], diff: "Intermediate" },
+                { q: "What is the space complexity of storing a Linked List of N nodes?", a: "O(N)", options: ["O(N)", "O(1)", "O(N^2)", "O(log N)"], diff: "Intermediate" },
+                { 
+                    q: "Which line correctly links the new node to the old head when inserting at the beginning of a Singly Linked List?", 
+                    code: "Node* newNode = new Node(data);\n// MISSING LINE\nhead = newNode;",
+                    a: "newNode->next = head;", 
+                    options: ["newNode->next = head;", "head->prev = newNode;", "head = head->next;", "newNode->next = NULL;"], 
+                    diff: "Intermediate" 
+                },
+                { 
+                    q: "In a Doubly Linked List node structure, what pointer is missing?", 
+                    code: "struct Node {\n  int data;\n  Node* next;\n  // MISSING POINTER\n};",
+                    a: "Node* prev;", 
+                    options: ["Node* prev;", "Node* tail;", "int size;", "Node* current;"], 
+                    diff: "Intermediate" 
+                },
+                { 
+                    q: "What is the worst-case time complexity of Bubble Sort?", 
+                    code: "void bubbleSort(int arr[], int n) { \n  for (int i = 0; i < n - 1; i++) {\n    for (int j = 0; j < n - i - 1; j++) { \n      /* swap logic */ \n    }\n  }\n}",
+                    a: "O(n^2)", 
+                    options: ["O(n^2)", "O(n log n)", "O(n)", "O(1)"], 
+                    diff: "Intermediate" 
+                },
 
-            // --- GROUP 3: ADVANCED (51-75) ---
-            { q: "What is the defining property of a Binary Search Tree (BST)?", a: "Left < Node < Right", options: ["Left < Node < Right", "Left > Node > Right", "Complete Tree", "Heaped property"], diff: "Advanced" },
-            { q: "Which traversal prints a BST in sorted order?", a: "Inorder", options: ["Inorder", "Preorder", "Postorder", "Level Order"], diff: "Advanced" },
-            { q: "Max number of nodes in a binary tree of height h?", a: "2^(h+1) - 1", options: ["2^(h+1) - 1", "2^h", "h^2", "2*h + 1"], diff: "Advanced" },
-            { q: "Worst-case search time in an unbalanced BST?", a: "O(n)", options: ["O(n)", "O(log n)", "O(1)", "O(n^2)"], diff: "Advanced" },
-            { q: "What is the root property of a Max-Heap?", a: "Root >= Children", options: ["Root >= Children", "Root <= Children", "Root is always 0", "Root has no children"], diff: "Advanced" },
-            { q: "Index of Left Child in array-based Heap (0-indexed)?", a: "2*i + 1", options: ["2*i + 1", "2*i", "2*i + 2", "i/2"], diff: "Advanced" },
-            { q: "Index of Parent in array-based Heap (0-indexed)?", a: "(i-1)/2", options: ["(i-1)/2", "i/2", "2*i", "(i+1)/2"], diff: "Advanced" },
-            { q: "Time complexity to insert into a Heap?", a: "O(log n)", options: ["O(log n)", "O(1)", "O(n)", "O(n log n)"], diff: "Advanced" },
-            { q: "What underlying structure does `std::map` typically use?", a: "Red-Black Tree", options: ["Red-Black Tree", "Hash Table", "Vector", "Linked List"], diff: "Advanced" },
-            { q: "What underlying structure does `std::unordered_map` use?", a: "Hash Table", options: ["Hash Table", "BST", "Heap", "Stack"], diff: "Advanced" },
-            { q: "Average search time in a Hash Table?", a: "O(1)", options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"], diff: "Advanced" },
-            { q: "What is a Hash Collision?", a: "Two keys mapping to same index", options: ["Two keys mapping to same index", "Table running out of memory", "Key not found", "Invalid hash function"], diff: "Advanced" },
-            { q: "What is Chaining in Hash Tables?", a: "Using a list at each bucket", options: ["Using a list at each bucket", "Linking two tables", "Recursive hashing", "Sorting the keys"], diff: "Advanced" },
-            { q: "Which traversal is best to delete a tree (freeing memory)?", a: "Postorder", options: ["Postorder", "Inorder", "Preorder", "Level Order"], diff: "Advanced" },
-            { q: "What is the height of a balanced BST with N nodes?", a: "log N", options: ["log N", "N", "N/2", "N^2"], diff: "Advanced" },
-            { q: "Elements in `std::set` are always...?", a: "Sorted and Unique", options: ["Sorted and Unique", "Unsorted and Unique", "Sorted and Duplicate", "Random"], diff: "Advanced" },
-            { q: "What is `std::priority_queue` by default?", a: "Max-Heap", options: ["Max-Heap", "Min-Heap", "BST", "Stack"], diff: "Advanced" },
-            { q: "How do you handle 'extract-min' in a Min-Heap?", a: "Swap root with last, remove last, bubble down", options: ["Swap root with last, remove last, bubble down", "Delete root, shift array", "Delete root, bubble up", "Search and delete"], diff: "Advanced" },
-            { q: "What is a Complete Binary Tree?", a: "Filled levels, last level left-filled", options: ["Filled levels, last level left-filled", "Every node has 2 children", "Every node has 0 or 2 children", "Perfectly symmetrical"], diff: "Advanced" },
-            { q: "Time complexity to build a Heap from an array?", a: "O(n)", options: ["O(n)", "O(n log n)", "O(log n)", "O(n^2)"], diff: "Advanced" },
-            { q: "Complexity of `std::set::insert()`?", a: "O(log n)", options: ["O(log n)", "O(1)", "O(n)", "O(n log n)"], diff: "Advanced" },
-            { q: "What happens if you insert a duplicate into `std::set`?", a: "It is ignored", options: ["It is ignored", "It is added", "It throws an error", "It replaces the old one"], diff: "Advanced" },
-            { q: "Which is NOT a linear data structure?", a: "Tree", options: ["Tree", "Stack", "Queue", "Vector"], diff: "Advanced" },
-            { q: "Formula for middle index in Binary Search to avoid overflow?", a: "low + (high - low) / 2", options: ["low + (high - low) / 2", "(low + high) / 2", "high - low / 2", "low + high"], diff: "Advanced" },
-            { q: "What is `std::pair` often used for?", a: "Storing two heterogeneous values", options: ["Storing two heterogeneous values", "Linked Lists", "Defining classes", "Loops"], diff: "Advanced" },
-
-            // --- GROUP 4: EXPERT (76-100) ---
-            { q: "What is a Memory Leak?", a: "Allocated memory not freed", options: ["Allocated memory not freed", "Stack Overflow", "Using uninitialized memory", "Array out of bounds"], diff: "Expert" },
-            { q: "What is a Dangling Pointer?", a: "Pointer to freed memory", options: ["Pointer to freed memory", "Null pointer", "Uninitialized pointer", "Void pointer"], diff: "Expert" },
-            { q: "What is a Double Free error?", a: "Calling delete on the same pointer twice", options: ["Calling delete on the same pointer twice", "Allocating twice", "Using two pointers", "Freeing a null pointer"], diff: "Expert" },
-            { q: "What is the type `int**`?", a: "Pointer to a Pointer", options: ["Pointer to a Pointer", "Double Integer", "Reference to int", "2D Array literal"], diff: "Expert" },
-            { q: "If `v.capacity() == v.size()`, what happens on push_back?", a: "Reallocation (new memory + copy)", options: ["Reallocation (new memory + copy)", "Simple insert", "Overflow Error", "Nothing"], diff: "Expert" },
-            { q: "Does `std::vector::clear()` free the memory capacity?", a: "No, size becomes 0 but capacity remains", options: ["No, size becomes 0 but capacity remains", "Yes, it frees everything", "It deletes the vector object", "It fills with zeros"], diff: "Expert" },
-            { q: "What is Iterator Invalidation?", a: "Iterators pointing to old memory locations", options: ["Iterators pointing to old memory locations", "Iterators reaching end()", "Looping infinitely", "Using null iterators"], diff: "Expert" },
-            { q: "What is `std::vector::shrink_to_fit()`?", a: "Requests to reduce capacity to size", options: ["Requests to reduce capacity to size", "Clears the vector", "Resizes to 0", "Deletes elements"], diff: "Expert" },
-            { q: "Worst case complexity of Hash Table insert with many collisions?", a: "O(n)", options: ["O(n)", "O(1)", "O(log n)", "O(n log n)"], diff: "Expert" },
-            { q: "What is the result of `delete nullptr;`?", a: "Safe / No-op", options: ["Safe / No-op", "Crash", "Memory Leak", "Compiler Error"], diff: "Expert" },
-            { q: "Difference between `vector[i]` and `vector.at(i)`?", a: "at() checks bounds, [] does not", options: ["at() checks bounds, [] does not", "[] checks bounds, at() does not", "No difference", "[] is slower"], diff: "Expert" },
-            { q: "What is a Segmentation Fault?", a: "Accessing memory you don't own", options: ["Accessing memory you don't own", "Division by zero", "Infinite Loop", "Syntax Error"], diff: "Expert" },
-            { q: "How do you declare a pointer to a function?", a: "void (*ptr)()", options: ["void (*ptr)()", "void *ptr()", "void ptr()", "function* ptr"], diff: "Expert" },
-            { q: "What does `std::move` do?", a: "Casts to r-value reference (enables move semantics)", options: ["Casts to r-value reference (enables move semantics)", "Moves memory physically", "Copies data", "Deletes object"], diff: "Expert" },
-            { q: "Why use `const` reference in function arguments?", a: "Avoid copy + Read-only safety", options: ["Avoid copy + Read-only safety", "To modify the original", "To allow null values", "To speed up compilation"], diff: "Expert" },
-            { q: "What is Stable Sort?", a: "Preserves relative order of equal elements", options: ["Preserves relative order of equal elements", "Fastest sort", "Uses constant space", "Sorts in place"], diff: "Expert" },
-            { q: "In a Min-Heap, where is the largest element?", a: "One of the leaves", options: ["One of the leaves", "The root", "The second level", "The middle"], diff: "Expert" },
-            { q: "What is the complexity of `std::list::splice`?", a: "O(1)", options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"], diff: "Expert" },
-            { q: "Why is `vector<bool>` special?", a: "It is specialized to use 1 bit per boolean", options: ["It is specialized to use 1 bit per boolean", "It is faster", "It uses 4 bytes per bool", "It cannot be resized"], diff: "Expert" },
-            { q: "What is `size_t`?", a: "Unsigned integer for size/indices", options: ["Unsigned integer for size/indices", "Signed integer", "A pointer type", "A macro for int"], diff: "Expert" },
-            { q: "Space complexity of recursive Fibonacci without memoization?", a: "O(n) [Depth of stack]", options: ["O(n) [Depth of stack]", "O(1)", "O(2^n)", "O(log n)"], diff: "Expert" },
-            { q: "What is the 'load factor' in a Hash Table?", a: "Elements / Buckets", options: ["Elements / Buckets", "Buckets / Elements", "Collision count", "Hash function complexity"], diff: "Expert" },
-            { q: "When does `std::map` iterator invalidation happen?", a: "Only for the deleted element", options: ["Only for the deleted element", "On every insert", "On every delete", "Never"], diff: "Expert" },
-            { q: "What does `virtual` keyword do in C++ classes?", a: "Enables polymorphism / dynamic dispatch", options: ["Enables polymorphism / dynamic dispatch", "Makes it static", "Prevents inheritance", "Makes it private"], diff: "Expert" },
-            { q: "What is `std::weak_ptr` used for?", a: "Breaking circular references", options: ["Breaking circular references", "Automatic deletion", "Shared ownership", "Faster pointers"], diff: "Expert" }
-        ];
+                // --- GROUP 3: ADVANCED (75-110) ---
+                // --------------------------------------------------------------------------------------
+                // PDF & ADT/CODE COMPLETION QUESTIONS (Q75-Q80)
+                // --------------------------------------------------------------------------------------
+                { 
+                    q: "Which function header correctly begins a recursive C++ search for a key in a Binary Search Tree (BST)?", 
+                    code: "// Focus on the return type and parameters.",
+                    a: "node* search(node* root, int key);", 
+                    options: ["node* search(node* root, int key);", "void search(int key);", "bool search(node& root, int key);", "int search(int key);"], 
+                    diff: "Advanced" 
+                },
+                { 
+                    q: "In a Binary Search Tree (BST), what traversal method is used to visit the root after visiting both the left and right subtrees?", 
+                    code: "void traverse(Node* root) {\n  if (root == NULL) return;\n  traverse(root->left);\n  traverse(root->right);\n  std::cout << root->data << \" \"; \n}",
+                    a: "Postorder Traversal", 
+                    options: ["Postorder Traversal", "Inorder Traversal", "Preorder Traversal", "Level Order Traversal"], 
+                    diff: "Advanced" 
+                },
+                { 
+                    q: "What is the complexity of inserting an element into a std::set?", 
+                    code: "// std::set is typically implemented using a Balanced BST (like Red-Black Tree).",
+                    a: "O(log N)", 
+                    options: ["O(log N)", "O(1)", "O(N)", "O(N^2)"], 
+                    diff: "Advanced" 
+                },
+                { 
+                    q: "What is the typical worst-case space complexity of the Merge Sort algorithm due to auxiliary arrays?", 
+                    code: "/* Merge Sort recursively divides the array into halves and then merges them. */",
+                    a: "O(n)", 
+                    options: ["O(n)", "O(log n)", "O(1)", "O(n^2)"], 
+                    diff: "Advanced" 
+                },
+                { 
+                    q: "For a Min-Heap, what is the correct condition to maintain the heap property when moving up the tree?", 
+                    code: "while (i > 0 && heap[i] ___ heap[parent(i)]) { /* swap */ }",
+                    a: "<", 
+                    options: ["<", ">", "==", "!="], 
+                    diff: "Advanced" 
+                },
+                { 
+                    q: "A 'queue of queues' (a Queue ADT where elements are also Queues) is often used for parallel processing or which tree traversal algorithm?", 
+                    code: "std::queue<std::queue<T>> complexQueue;",
+                    a: "Level Order Traversal", 
+                    options: ["Level Order Traversal", "Inorder Traversal", "Depth-First Search", "Preorder Traversal"], 
+                    diff: "Advanced" 
+                },
+                // --------------------------------------------------------------------------------------
+                // ADT/CONCEPT QUESTIONS (Q81-Q110)
+                // --------------------------------------------------------------------------------------
+                { q: "What is the defining property of a Binary Search Tree (BST)?", a: "Left < Node < Right", options: ["Left < Node < Right", "Left > Node > Right", "Complete Tree", "Heaped property"], diff: "Advanced" },
+                { q: "Which traversal prints a BST in sorted order?", a: "Inorder", options: ["Inorder", "Preorder", "Postorder", "Level Order"], diff: "Advanced" },
+                { q: "Max number of nodes in a binary tree of height h?", a: "2^(h+1) - 1", options: ["2^(h+1) - 1", "2^h", "h^2", "2*h + 1"], diff: "Advanced" },
+                { q: "Worst-case search time in an unbalanced BST?", a: "O(n)", options: ["O(n)", "O(log n)", "O(1)", "O(n^2)"], diff: "Advanced" },
+                { q: "What is the root property of a Max-Heap?", a: "Root >= Children", options: ["Root >= Children", "Root <= Children", "Root is always 0", "Root has no children"], diff: "Advanced" },
+                { q: "Index of Left Child in array-based Heap (0-indexed)?", a: "2*i + 1", options: ["2*i + 1", "2*i", "2*i + 2", "i/2"], diff: "Advanced" },
+                { q: "Index of Parent in array-based Heap (0-indexed)?", a: "(i-1)/2", options: ["(i-1)/2", "i/2", "2*i", "(i+1)/2"], diff: "Advanced" },
+                { q: "Time complexity to insert into a Heap?", a: "O(log n)", options: ["O(log n)", "O(1)", "O(n)", "O(n log n)"], diff: "Advanced" },
+                { q: "What underlying structure does std::map typically use?", a: "Red-Black Tree", options: ["Red-Black Tree", "Hash Table", "Vector", "Linked List"], diff: "Advanced" },
+                { q: "What underlying structure does std::unordered_map use?", a: "Hash Table", options: ["Hash Table", "BST", "Heap", "Stack"], diff: "Advanced" },
+                { q: "Average search time in a Hash Table?", a: "O(1)", options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"], diff: "Advanced" },
+                { q: "What is a Hash Collision?", a: "Two keys mapping to same index", options: ["Two keys mapping to same index", "Table running out of memory", "Key not found", "Invalid hash function"], diff: "Advanced" },
+                { q: "What is Chaining in Hash Tables?", a: "Using a list at each bucket", options: ["Using a list at each bucket", "Linking two tables", "Recursive hashing", "Sorting the keys"], diff: "Advanced" },
+                { q: "Which traversal is best to delete a tree (freeing memory)?", a: "Postorder", options: ["Postorder", "Inorder", "Preorder", "Level Order"], diff: "Advanced" },
+                { q: "What is the height of a balanced BST with N nodes?", a: "O(log N)", options: ["O(log N)", "N", "N/2", "N^2"], diff: "Advanced" },
+                { q: "Elements in std::set are always...?", a: "Sorted and Unique", options: ["Sorted and Unique", "Unsorted and Unique", "Sorted and Duplicate", "Random"], diff: "Advanced" },
+                { q: "What is std::priority_queue by default?", a: "Max-Heap", options: ["Max-Heap", "Min-Heap", "BST", "Stack"], diff: "Advanced" },
+                { q: "How do you handle 'extract-min' in a Min-Heap?", a: "Swap root with last, remove last, bubble down", options: ["Swap root with last, remove last, bubble down", "Delete root, shift array", "Delete root, bubble up", "Search and delete"], diff: "Advanced" },
+                { q: "What is a Complete Binary Tree?", a: "Filled levels, last level left-filled", options: ["Filled levels, last level left-filled", "Every node has 2 children", "Every node has 0 or 2 children", "Perfectly symmetrical"], diff: "Advanced" },
+                { q: "Time complexity to build a Heap from an array?", a: "O(n)", options: ["O(n)", "O(n log n)", "O(log n)", "O(n^2)"], diff: "Advanced" },
+                { q: "Complexity of std::set::insert()?", a: "O(log n)", options: ["O(log n)", "O(1)", "O(n)", "O(n log n)"], diff: "Advanced" },
+                { q: "What happens if you insert a duplicate into std::set?", a: "It is ignored", options: ["It is ignored", "It is added", "It throws an error", "It replaces the old one"], diff: "Advanced" },
+                { q: "Which is NOT a linear data structure?", a: "Tree", options: ["Tree", "Stack", "Queue", "Vector"], diff: "Advanced" },
+                { q: "Formula for middle index in Binary Search to avoid overflow?", a: "low + (high - low) / 2", options: ["low + (high - low) / 2", "(low + high) / 2", "high - low / 2", "low + high"], diff: "Advanced" },
+                { q: "What is std::pair often used for?", a: "Storing two heterogeneous values", options: ["Storing two heterogeneous values", "Linked Lists", "Defining classes", "Loops"], diff: "Advanced" },
+                { 
+                    q: "In a typical Hash Table implementation using chaining, a new element is added to the ______ of the linked list at the bucket index.", 
+                    code: "bucket[index].push_front(newElement);",
+                    a: "Front (O(1))", 
+                    options: ["Front (O(1))", "End (O(n))", "Middle (O(n))", "Sorted (O(n))"], 
+                    diff: "Advanced" 
+                },
+                { q: "What is the time complexity of a triple nested loop, each going from 0 to N-1?", a: "O(N^3)", options: ["O(N^3)", "O(3N)", "O(N^2)", "O(N log N)"], diff: "Advanced" },
+                { q: "When using realloc(ptr, new_size), what is a possible scenario if the reallocation fails?", a: "It returns NULL, leaving the original block untouched.", options: ["It returns NULL, leaving the original block untouched.", "It throws an exception.", "It automatically calls free(ptr).", "It causes a memory leak."], diff: "Advanced" },
+                { q: "In a 'stack of queues' ADT, which operation has the highest time complexity?", a: "Dequeuing from the bottom-most queue.", options: ["Dequeuing from the bottom-most queue.", "Pushing a new queue onto the stack.", "Checking if the stack is empty.", "Checking the size of the top queue."], diff: "Advanced" },
+                { q: "Which of the following is an O(N!) complexity operation?", a: "Finding all Hamiltonian cycles in a graph", options: ["Finding all Hamiltonian cycles in a graph", "Searching a balanced BST", "Merge Sort", "Iterating through an array"], diff: "Advanced" },
+                { q: "What is the time complexity of std::vector::insert(iterator, value) near the beginning of a large vector?", a: "O(N)", options: ["O(N)", "O(1)", "O(log N)", "O(N^2)"], diff: "Advanced" },
+                
+                // --- NEW QUESTIONS FROM PDF ---
+                { q: "Which time complexity is considered the best among the following?", a: "O(1)", options: ["O(log N)", "O(N)", "O(N^2)", "O(1)"], diff: "Beginner" },
+                { q: "Which time complexity is typically considered 'NP-hard / infeasible' for large N?", a: "O(N!)", options: ["O(N log N)", "O(N^3)", "O(log N)", "O(N!)"], diff: "Intermediate" },
+                { q: "What is space complexity?", a: "How the required memory grows as input size N grows.", options: ["The maximum number of variables in a program.", "The maximum time required for execution.", "How the required memory grows as input size N grows.", "The size of the hard disk."], diff: "Beginner" },
+                { q: "What is the space complexity of a 2D array int A[N][N]?", a: "O(N^2)", options: ["O(1)", "O(N)", "O(N^2)", "O(N log N)"], diff: "Intermediate" },
+                { q: "What does a pointer variable store?", a: "A memory address.", options: ["An integer value (like 5).", "A memory address.", "The size of the variable it points to.", "A character string."], diff: "Beginner" },
+                { q: "On a typical 32-bit system, how many bytes does an int usually occupy?", a: "4 bytes.", options: ["1 byte.", "2 bytes.", "4 bytes.", "8 bytes."], diff: "Beginner" },
+                { q: "What is the purpose of malloc in C?", a: "To dynamically allocate a block of memory from the heap.", options: ["To allocate memory on the stack.", "To free allocated memory.", "To dynamically allocate a block of memory from the heap.", "To increase the size of an allocated block."], diff: "Intermediate" },
+                { q: "What does malloc return if memory cannot be allocated?", a: "NULL.", options: ["The size of the requested block.", "The address 0.", "The last valid memory address.", "NULL."], diff: "Intermediate" },
+                { q: "Which function can you use to change the size of an already allocated block of memory in C?", a: "realloc.", options: ["malloc.", "free.", "calloc.", "realloc."], diff: "Intermediate" },
+                { q: "Which function must you call when you are done with dynamically allocated memory?", a: "free.", options: ["delete.", "reset.", "clear.", "free."], diff: "Beginner" },
+                { q: "What is a struct used for in C?", a: "To group related variables (fields) into a single record type.", options: ["To define a function's return type.", "To create dynamic arrays.", "To group related variables (fields) into a single record type.", "To implement inheritance."], diff: "Beginner" },
+                { q: "In a singly linked list, what does the head pointer represent?", a: "The address of the first node in the list.", options: ["The address of the last node in the list.", "The total number of nodes.", "The address of the first node in the list.", "The largest data value in the list."], diff: "Beginner" },
+                { q: "Give one main advantage of linked lists over arrays.", a: "Dynamic size and easier insertion/deletion in the middle (no shifting).", options: ["O(1) random access.", "Contiguous memory storage.", "Lower memory overhead.", "Dynamic size and easier insertion/deletion in the middle (no shifting)."], diff: "Intermediate" },
+                { q: "Give one main disadvantage of linked lists compared to arrays.", a: "No O(1) random access; searching is O(N).", options: ["Requires dynamic memory allocation.", "No O(1) random access; searching is O(N).", "Fixed size.", "Nodes can only store integers."], diff: "Intermediate" },
+                { q: "What extra pointers does a doubly linked list node have compared to a singly linked list node?", a: "Both next and prev pointers.", options: ["Only the prev pointer.", "Only the next pointer.", "Both next and prev pointers.", "A head and a tail pointer."], diff: "Beginner" },
+                { q: "What is a circular linked list?", a: "A list where the last node points back to the first node, forming a ring.", options: ["A list where nodes are stored in a circle in memory.", "A list where the head and tail pointers are the same.", "A list where the last node points back to the first node, forming a ring.", "A list used only for rotation operations."], diff: "Intermediate" },
+                { q: "What does LIFO stand for in the context of stacks?", a: "Last In, First Out.", options: ["Last In, First Out.", "Largest Item, First Out.", "Linear Insert, Fast Output.", "Last Item Found, Output."], diff: "Beginner" },
+                { q: "If we push 11, 22, 33 to an empty stack and then pop once, which element is removed?", a: "33.", options: ["11.", "22.", "33.", "The middle element."], diff: "Beginner" },
+                { q: "What is the time complexity of push and pop operations on a stack?", a: "O(1) amortized.", options: ["O(N)", "O(N log N)", "O(log N)", "O(1) amortized."], diff: "Intermediate" },
+                { q: "What does FIFO stand for in the context of queues?", a: "First In, First Out.", options: ["First Item Found, Output.", "First In, First Out.", "Fast Input, Fast Output.", "Few Items, Fewer Outputs."], diff: "Beginner" },
+                { q: "If we enqueue 11, 22, 33 to an empty queue and then dequeue once, which element is removed?", a: "11.", options: ["11.", "22.", "33.", "The largest element."], diff: "Beginner" },
+                { q: "What is a deque (std::deque)?", a: "A double-ended queue that supports efficient push/pop at both front and back.", options: ["A queue that only stores doubles.", "A dynamic array.", "A double-ended queue that supports efficient push/pop at both front and back.", "A queue with O(N) push/pop time."], diff: "Intermediate" },
+                { q: "How is std::vector stored in memory?", a: "As a dynamic array with contiguous elements.", options: ["As a doubly linked list.", "As a dynamic array with contiguous elements.", "As a balanced binary search tree.", "As a set of key-value pairs."], diff: "Beginner" },
+                { q: "What is the worst-case time complexity of inserting in the middle of a vector?", a: "O(N) due to shifting elements.", options: ["O(1)", "O(log N)", "O(N log N)", "O(N) due to shifting elements."], diff: "Intermediate" },
+                { q: "How is std::list typically implemented?", a: "As a doubly linked list.", options: ["As a dynamic array.", "As a singly linked list.", "As a doubly linked list.", "As a fixed-size array."], diff: "Intermediate" },
+                { q: "Why can't you do constant-time random access with std::list?", a: "Because it doesn't store elements contiguously; you must traverse node by node.", options: ["Because std::list is only for strings.", "Because it only supports O(N) access.", "Because it doesn't store elements contiguously; you must traverse node by node.", "Because the size is fixed."], diff: "Intermediate" },
+                { q: "Name two operations that std::list supports efficiently in the middle given an iterator.", a: "insert and erase.", options: ["v[i] access and sort.", "push_back and pop_front.", "insert and erase.", "begin and end."], diff: "Intermediate" },
+                { q: "How can you conceptually implement a stack using two queues?", a: "By pushing to a second queue and moving elements from the first, then swapping queues so newest is always at the front.", options: ["Pushing to Q1 and popping from Q2.", "Using two queues in parallel with no element movement.", "By pushing to a second queue and moving elements from the first, then swapping queues so newest is always at the front.", "Using O(N) amortized push."], diff: "Advanced" },
+                { q: "What does std::set store?", a: "Unique keys in sorted order.", options: ["Unique keys in sorted order.", "Unique key-value pairs.", "Keys with duplicates allowed.", "Keys and values in insertion order."], diff: "Beginner" },
+                { q: "What is the usual underlying data structure of std::set?", a: "A balanced binary search tree (e.g., red-black tree).", options: ["A hash table.", "A dynamic array (vector).", "A balanced binary search tree (e.g., red-black tree).", "A doubly linked list."], diff: "Intermediate" },
+                { q: "What is the time complexity of search, insert, and erase in std::set?", a: "O(log N)", options: ["O(1)", "O(N)", "O(N^2)", "O(log N)"], diff: "Intermediate" },
+                { q: "What does std::map store?", a: "Key-value pairs (key mapped to a value) with keys kept sorted.", options: ["A list of unique keys only.", "Key-value pairs (key mapped to a value) with keys kept sorted.", "Key-value pairs with keys in random order.", "A non-sorted list of unique values."], diff: "Beginner" },
+                { q: "What happens if you access m['x'] when 'x' is not already in a std::map m?", a: "A new element with key 'x' and default-initialized value is inserted.", options: ["The map returns an error.", "The map returns NULL.", "A new element with key 'x' and default-initialized value is inserted.", "The map returns the last element's value."], diff: "Intermediate" },
+                { q: "What is a tree in data structures?", a: "A non-linear hierarchical structure consisting of nodes and edges.", options: ["A linear structure like an array.", "A non-linear hierarchical structure consisting of nodes and edges.", "A collection of key-value pairs.", "A set of disconnected nodes."], diff: "Beginner" },
+                { q: "Define a leaf in a tree.", a: "Node with no children.", options: ["The top-most node.", "Node with no children.", "Nodes sharing the same parent.", "A node with exactly one child."], diff: "Beginner" },
+                { q: "What is the height of a tree?", a: "The number of edges (or levels) on the longest path from the root to a leaf.", options: ["The total number of nodes.", "The number of edges (or levels) on the longest path from the root to a leaf.", "The maximum number of children any node has.", "The number of levels in the tree minus one."], diff: "Intermediate" },
+                { q: "What is a binary tree?", a: "A tree in which each node has at most two children (left and right).", options: ["A tree where every node has two children.", "A tree used only for binary search.", "A tree in which each node has at most two children (left and right).", "A tree with a height of at most 2."], diff: "Beginner" },
+                { q: "In the array representation of a complete binary tree (root at index 1), where are the left and right children of node at index i?", a: "Left at 2*i and right at 2*i+1.", options: ["Left at i-1 and right at i+1.", "Left at 2*i and right at 2*i+1.", "Left at i/2 and right at i/2+1.", "Left at i*i and right at i*i+1."], diff: "Intermediate" },
+                { q: "State the BST property for any node with key K.", a: "All keys in the left subtree are < K, and all keys in the right subtree are > K.", options: ["All keys in the left subtree are > K, and all keys in the right subtree are < K.", "All keys in the left subtree are < K, and all keys in the right subtree are > K.", "The key K must be greater than its parent's key.", "The key K must be equal to the sum of its children's keys."], diff: "Beginner" },
+                { q: "What is the average time complexity of search in a balanced BST with N nodes?", a: "O(log N)", options: ["O(1)", "O(N)", "O(log N)", "O(N log N)"], diff: "Intermediate" },
+                { q: "What is the main purpose of self-balancing trees like AVL and Red-Black trees?", a: "To keep the tree height O(log N) for efficient operations.", options: ["To simplify tree insertion and deletion.", "To keep the tree height O(N) for fast access.", "To keep the tree height O(log N) for efficient operations.", "To store only unique values."], diff: "Intermediate" },
+                { q: "What is the balance factor condition in an AVL tree?", a: "|height(left) - height(right)| &le; 1.", options: ["height(left) = height(right).", "|height(left) - height(right)| &le; 1.", "height(left) - height(right) = 2.", "height(left) + height(right) = N."], diff: "Intermediate" },
+                { q: "Which STL containers are typically implemented using Red-Black trees?", a: "std::set and std::map.", options: ["std::vector and std::list.", "std::stack and std::queue.", "std::set and std::map.", "std::deque and std::priority_queue."], diff: "Intermediate" },
+                { q: "For what type of systems are B+ trees mainly optimized?", a: "Databases and disk/SSD-based storage.", options: ["Embedded systems with very little RAM.", "Real-time operating systems.", "Databases and disk/SSD-based storage.", "Simple in-memory caching."], diff: "Intermediate" },
+                { q: "How is a graph G usually defined?", a: "G=(V,E) with vertex set V and edge set E.", options: ["G=(S,T) with stack S and queue T.", "G=(A,B) with two arrays A and B.", "G=(V,E) with vertex set V and edge set E.", "G=(H,W) with height H and width W."], diff: "Beginner" },
+                { q: "What is the in-degree of a node in a directed graph?", a: "The number of incoming edges to that node.", options: ["The number of outgoing edges from that node.", "The total number of edges connected to that node.", "The number of incoming edges to that node.", "The weight of the shortest path to that node."], diff: "Intermediate" },
+                { q: "Define a universal sink.", a: "A vertex with in-degree |V|-1 and out-degree 0.", options: ["A vertex with out-degree |V|-1 and in-degree 0.", "A vertex with equal in-degree and out-degree.", "A vertex with in-degree |V|-1 and out-degree 0.", "A node with the smallest data value."], diff: "Advanced" },
+                { q: "What is an articulation point in a graph?", a: "A vertex whose removal increases the number of connected components.", options: ["An edge whose removal increases the number of connected components.", "A vertex that is connected to all other vertices.", "A vertex whose removal increases the number of connected components.", "A vertex that has an in-degree of 0."], diff: "Intermediate" },
+                { q: "What common graph/search idea can be applied to grid/maze movement problems?", a: "Breadth-First Search (BFS) or Depth-First Search (DFS) on a grid represented as a matrix.", options: ["Binary Search on the grid.", "Merge Sort on the grid.", "Breadth-First Search (BFS) or Depth-First Search (DFS) on a grid represented as a matrix.", "Quick Sort on the maze paths."], diff: "Intermediate" },
+                { q: "What kind of arguments do STL algorithms like sort and find operate on?", a: "Iterator ranges [first, last).", options: ["Fixed-size arrays only.", "Single element values.", "Integer indexes (e.g., 0 to N-1).", "Iterator ranges [first, last)."], diff: "Intermediate" }
+    ];
 
         // State Variables
         let currentQuestionIndex = 0;
         let score = 0;
         let shuffledQuestions = [];
         let isAnswering = false;
+        const totalQuestions = quizData.length; // Now 110
 
         // DOM Elements
         const startScreen = document.getElementById('start-screen');
         const quizContainer = document.getElementById('quiz-container');
         const resultsScreen = document.getElementById('results-screen');
         const questionText = document.getElementById('question-text');
+        const codeSnippet = document.getElementById('code-snippet');
         const optionsGrid = document.getElementById('options-grid');
         const feedbackArea = document.getElementById('feedback-area');
         const feedbackTitle = document.getElementById('feedback-title');
@@ -291,14 +513,13 @@
         const currentScoreEl = document.getElementById('current-score');
         const progressBar = document.getElementById('progress-bar');
         const difficultyLabel = document.getElementById('difficulty-label');
+        const nextButton = document.getElementById('next-btn');
+        const skipButton = document.getElementById('skip-btn');
         
         // --- Initialization ---
         function startQuiz() {
-            // Start straight away - no shuffled order of questions to maintain difficulty progression
-            // However, we will shuffle the OPTIONS within the questions.
-            
-            // Copy data to avoid modifying original
-            shuffledQuestions = [...quizData];
+            // Copy and shuffle the question order once
+            shuffledQuestions = [...quizData].sort(() => Math.random() - 0.5);
             
             currentQuestionIndex = 0;
             score = 0;
@@ -313,39 +534,100 @@
         }
 
         document.getElementById('restart-btn').onclick = () => {
-            if(confirm("Restart quiz? Current progress will be lost.")) {
+            // Use custom modal or message instead of confirm()
+            showConfirmationModal("Restart Quiz?", "Are you sure you want to restart the quiz? Your current progress will be lost.", () => {
                 location.reload();
-            }
+            });
         };
+
+        // Custom Modal UI (replacing confirm/alert)
+        function showConfirmationModal(title, message, onConfirm) {
+            // Check if modal exists, if not, create it (Simplified inline version)
+            let modal = document.getElementById('custom-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'custom-modal';
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 fade-in';
+                modal.innerHTML = `
+                    <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm">
+                        <h3 id="modal-title" class="text-xl font-bold mb-3 text-slate-800"></h3>
+                        <p id="modal-message" class="text-slate-600 mb-6 text-sm"></p>
+                        <div class="flex justify-end gap-3">
+                            <button id="modal-cancel" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors font-medium">Cancel</button>
+                            <button id="modal-confirm" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium">Confirm</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            modal.classList.remove('hidden');
+
+            const confirmBtn = document.getElementById('modal-confirm');
+            const cancelBtn = document.getElementById('modal-cancel');
+
+            // Clear previous listeners
+            const newConfirmBtn = confirmBtn.cloneNode(true);
+            confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+            const newCancelBtn = cancelBtn.cloneNode(true);
+            cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+            newConfirmBtn.onclick = () => {
+                modal.classList.add('hidden');
+                onConfirm();
+            };
+            newCancelBtn.onclick = () => {
+                modal.classList.add('hidden');
+            };
+        }
 
         // --- Core Game Logic ---
         function loadQuestion() {
             isAnswering = false;
             const qData = shuffledQuestions[currentQuestionIndex];
             
-            // Update Difficulty Label
-            let diffColor = "bg-green-100 text-green-700";
-            if(qData.diff === "Intermediate") diffColor = "bg-blue-100 text-blue-700";
-            if(qData.diff === "Advanced") diffColor = "bg-purple-100 text-purple-700";
-            if(qData.diff === "Expert") diffColor = "bg-orange-100 text-orange-700";
+            // FIX: Determine difficulty based on the question's actual property (qData.diff), NOT the index
+            let diffName = qData.diff; 
+            let diffColor = "";
             
+            if (diffName === "Basic") {
+                diffColor = "bg-green-100 text-green-700";
+            } else if (diffName === "Intermediate") {
+                diffColor = "bg-blue-100 text-blue-700";
+            } else { // "Advanced"
+                diffColor = "bg-purple-100 text-purple-700";
+            }
+
             difficultyLabel.className = `text-sm font-bold px-3 py-1 rounded ${diffColor} transition-colors duration-300`;
-            difficultyLabel.textContent = `${qData.diff} Level`;
+            difficultyLabel.textContent = `${diffName} Level`;
 
             // Update UI Headers
             document.getElementById('q-current').textContent = currentQuestionIndex + 1;
-            progressBar.style.width = `${((currentQuestionIndex) / quizData.length) * 100}%`;
+            progressBar.style.width = `${((currentQuestionIndex) / totalQuestions) * 100}%`;
             
             // Reset View
             questionText.textContent = qData.q;
             feedbackArea.classList.add('hidden');
             optionsGrid.innerHTML = '';
             
+            // Handle Code Snippet Display
+            if (qData.code) {
+                codeSnippet.textContent = qData.code.trim();
+                codeSnippet.classList.remove('hidden');
+            } else {
+                codeSnippet.classList.add('hidden');
+            }
+
             // Shuffle Options
-            // We copy the options array to not mess up the source
             let currentOptions = [...qData.options];
             currentOptions.sort(() => Math.random() - 0.5);
 
+            // Enable skip button
+            skipButton.classList.remove('hidden');
+            nextButton.classList.add('hidden');
+            
             // Render Buttons
             currentOptions.forEach(opt => {
                 const btn = document.createElement('button');
@@ -383,6 +665,10 @@
                 btn.classList.add('bg-red-100', 'border-red-500', 'text-red-900', 'wrong-anim', 'font-bold');
                 showFeedback(false, "Incorrect", `The correct answer was: ${correct}`);
             }
+
+            // Hide skip, show next
+            skipButton.classList.add('hidden');
+            nextButton.classList.remove('hidden');
         }
 
         function getRandomPraise() {
@@ -404,9 +690,28 @@
             }, 100);
         }
 
+        // --- Skip Functionality ---
+        function skipQuestion() {
+            if (isAnswering) return;
+            // Prevent scoring/feedback
+            isAnswering = true;
+            showFeedback(false, "Question Skipped", "Skipped questions do not affect your score.");
+            
+            // Disable buttons immediately
+            const allBtns = optionsGrid.querySelectorAll('button');
+            allBtns.forEach(b => {
+                b.disabled = true;
+                b.classList.add('opacity-70', 'cursor-not-allowed');
+            });
+
+            // Hide skip, show next
+            skipButton.classList.add('hidden');
+            nextButton.classList.remove('hidden');
+        }
+
         function nextQuestion() {
             currentQuestionIndex++;
-            if (currentQuestionIndex >= quizData.length) {
+            if (currentQuestionIndex >= totalQuestions) {
                 finishQuiz();
             } else {
                 loadQuestion();
@@ -418,7 +723,7 @@
             resultsScreen.classList.remove('hidden');
             scoreDisplay.classList.add('hidden');
             
-            const percent = Math.round((score / quizData.length) * 100);
+            const percent = Math.round((score / totalQuestions) * 100);
             document.getElementById('final-score-text').textContent = score;
             document.getElementById('final-score-percent').textContent = `${percent}%`;
             
